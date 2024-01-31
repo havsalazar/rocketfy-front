@@ -1,5 +1,7 @@
 import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ChartModule, UIChart } from 'primeng/chart';
+import { TabViewModule } from 'primeng/tabview';
+import { TableModule,Table } from 'primeng/table';
 import { WindPressure } from './../../../classes/sensor';
 import { BackendService } from './../../../services/backend-service.service';
 import { DatailTableComponent } from './../../common/datail-table/datail-table.component';
@@ -9,7 +11,8 @@ import { IoService } from './../../../services/io.service';
 @Component({
   selector: 'app-weather',
   standalone: true,
-  imports: [ChartModule,DatailTableComponent],
+  imports: [ChartModule,DatailTableComponent,TabViewModule,
+    TableModule],
   templateUrl: './weather.component.html',
   styleUrl: './weather.component.scss',
 })
@@ -17,13 +20,16 @@ export class WeatherComponent implements OnInit,OnDestroy{
   constructor(private backend: BackendService, private ioservice: IoService) {}
   private realTimeService!: Subscription;
   @ViewChild('chart') chart!: UIChart;
+  @ViewChild('dt') datatable!: Table;
 
   @Input({ required: true })
   sensor_id!: any;
+
+  
   data: any;
   options: any;
 
-
+  dataTableData:any;
   params = [
     { type: 'wind_speed', name: 'Velocidad del viento' },
     { type: 'pressure', name: 'Presión' }
@@ -40,6 +46,8 @@ export class WeatherComponent implements OnInit,OnDestroy{
         this.data.datasets[0].data.push(data.wind_speed);
         this.data.datasets[1].data.push(data.pressure);
         this.chart.refresh();
+        this.dataTableData.unshift(data)
+        this.datatable.reset()
       });
   }
   ngOnDestroy(): void {
@@ -49,6 +57,7 @@ export class WeatherComponent implements OnInit,OnDestroy{
     this.backend.getWeatherSensorData(this.sensor_id).subscribe({
       next: (value) => {
         this.processData(value);
+        this.dataTableData=value;
       },
     });
   }

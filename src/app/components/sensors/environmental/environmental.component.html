@@ -9,7 +9,30 @@
 </div>
 <div class="row">
     <div class="col">
-        <p-chart #chart type="bar" [data]="data" [options]="options" [responsive]="true"></p-chart>
+        <p-tabView>
+            <p-tabPanel header="Gráfico">
+                <p-chart #chart type="bar" [data]="data" [options]="options" [responsive]="true"></p-chart>
+            </p-tabPanel>
+            <p-tabPanel header="Tabla">
+                <p-table #dt [value]="originData" [paginator]="true" [rows]="50"
+                    [tableStyle]="{ 'min-width': '50rem' }">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th pSortableColumn="timestamp">Fecha<p-sortIcon field="code"></p-sortIcon></th>
+                            <th>Nivel de ruido</th>
+                            <th>Calidad de aire</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-product>
+                        <tr>
+                            <td>{{ product.timestamp }}</td>
+                            <td>{{ product.noise_level }}</td>
+                            <td>{{ product.air_quality }}</td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </p-tabPanel>
+        </p-tabView>
     </div>
 </div>
 <div class="d-flex">

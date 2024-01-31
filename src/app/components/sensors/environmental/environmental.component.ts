@@ -7,11 +7,20 @@ import { SvgBlockComponent } from '../../common/svg-block/svg-block.component';
 import { DatailTableComponent } from '../../common/datail-table/datail-table.component';
 import { IoService } from '../../../services/io.service';
 import { Subscription } from 'rxjs';
+import { TabViewModule } from 'primeng/tabview';
+import { TableModule,Table } from 'primeng/table';
 
 @Component({
   selector: 'app-environmental',
   standalone: true,
-  imports: [ChartModule, SvgBlockComponent, DatailTableComponent],
+  imports: [
+    ChartModule, 
+    SvgBlockComponent, 
+    DatailTableComponent,
+    TabViewModule,
+    TableModule
+
+  ],
   providers: [],
   templateUrl: './environmental.component.html',
   styleUrl: './environmental.component.scss',
@@ -20,13 +29,13 @@ export class EnvironmentalComponent implements OnInit, OnDestroy {
   constructor(private backend: BackendService, private ioservice: IoService) {}
   private realTimeService!: Subscription;
   @ViewChild('chart') chart!: UIChart;
+  @ViewChild('dt') datatable!: Table;
   @Input({ required: true })
   sensor_id!: any;
   data: any;
   originData: AirNoise[] = [];
   analitycData: any;
   options: any;
-
   params = [{ type: 'noise_level', name: 'Nivel de ruido' }];
 
   ngOnInit(): void {
@@ -40,6 +49,7 @@ export class EnvironmentalComponent implements OnInit, OnDestroy {
         this.data.labels.push(data.timestamp);
         this.data.datasets[0].data.push(data.noise_level);
         this.chart.refresh();
+        this.datatable.reset()
       });
   }
   ngOnDestroy(): void {

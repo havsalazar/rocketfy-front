@@ -1,0 +1,17 @@
+<div class="d-fex">
+    <div class="d-flex justify-content-center">Calidad de aire</div>
+    <div class="d-flex justify-content-center">
+        <div class="d-inline-flex p-2 bd-highlight">Excelente &nbsp;<app-svg-block color="fill:#238443" /></div>
+        <div class="d-inline-flex p-2 bd-highlight">Buena &nbsp;<app-svg-block color="fill:#C2E699" /></div>
+        <div class="d-inline-flex p-2 bd-highlight">Moderada &nbsp;<app-svg-block color="fill:#FFFFB2" /></div>
+        <div class="d-inline-flex p-2 bd-highlight">Mala &nbsp;<app-svg-block color="fill:#FF0909" /> </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col">
+        <p-chart #chart type="bar" [data]="data" [options]="options" [responsive]="true"></p-chart>
+    </div>
+</div>
+<div class="d-flex">
+    <app-datail-table sensorType="environmental" [params]="params" [sensorId]="sensor_id"></app-datail-table>
+</div>

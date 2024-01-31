@@ -1,0 +1,69 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 min-vh-100 d-flex flex-column justify-content-center">
+      <div class="row">
+        <div class="col-lg-6 col-md-8 mx-auto">
+
+          <div class="card rounded shadow shadow-sm  ">
+            <div class="card-header ">
+                <h3 class="mb-0">Login</h3>
+            </div>
+            <div class="card-body">
+              <div class="login-form ">
+                <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                  <div class="form-group">
+                    <label>Email</label>
+                    <input type="text" autocomplete="off" formControlName="email" class="form-control"
+                      [ngClass]="{ 'is-invalid': submitted && f['email'].errors }" />
+                    @if (submitted && f['email'].errors) {
+                    <div class="invalid-feedback">
+                      @if (f['email'].errors['required']) {
+                      <div>Email is required</div>
+                      }
+                      @if (f['email'].errors['email']) {
+                      <div>Email is invalid</div>
+                      }
+                    </div>
+                    }
+                  </div>
+                  <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" autocomplete="off" formControlName="password" class="form-control"
+                      [ngClass]="{ 'is-invalid': submitted && f['password'].errors }" />
+                    @if (submitted && f['password'].errors) {
+                    <div class="invalid-feedback">
+                      @if (f['password'].errors['required']) {
+                      <div>Password is required</div>
+                      }
+                      @if (f['password'].errors['minlength']) {
+                      <div>Password must be at least 4 characters</div>
+                      }
+                    </div>
+                    }
+                  </div>
+                  <div class="form-group d-flex flex-column justify-content-center">
+                    <button type="submit" class="btn btn-primary">Login</button>
+                  </div>
+                  <div class="form-group" id="messages">
+                    <div class="alert alert-primary" role="primary">
+                      Email : {{'test@test.com'}}
+                      <br>
+                      Password: 12345
+
+                    </div>
+                    @if (submitted && isLoginFailed) {
+                    <div class="alert alert-danger" role="alert">
+                      Login failed: {{ errorMessage }}
+                    </div>
+                    }
+                  </div>
+
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

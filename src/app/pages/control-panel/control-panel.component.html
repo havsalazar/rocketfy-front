@@ -1,0 +1,35 @@
+<div>
+    <app-header>
+        <div sensorDropdown class="mr-auto ">
+            <p-dropdown [options]="sensors" optionLabel="sensor_name" (onChange)="loadComponentAndData($event)"
+                [showClear]="true" placeholder="Selecciona un sensor"></p-dropdown>
+        </div>
+    </app-header>
+    <main role="main" class="container">
+        <!-- Dropdown to show the sensors -->
+
+
+        <div class="row">
+            <div class="col-md-12 pt-3">
+
+
+                @switch (selectedSensor?.sensor_id) {
+                @case (1) {
+                <app-climate [sensor_id]="selectedSensor?._id"></app-climate>
+                }
+                @case (2) {
+                <app-weather [sensor_id]="selectedSensor!._id"></app-weather>
+                }
+                @case (3) {
+                <app-environmental [sensor_id]="selectedSensor!._id"></app-environmental>
+                }
+
+                }
+            </div>
+
+
+        </div>
+
+
+    </main>
+</div>
